@@ -9,8 +9,8 @@ export const contactAddSchema = Joi.object({
     .pattern(phoneNumberRegexp)
     .max(20)
     .required(),
-  email: Joi.string().min(3).max(50).required(),
-  isFavourite: Joi.boolean().required(),
+  email: Joi.string().min(3).max(50),
+  isFavourite: Joi.boolean(),
   contactType: Joi.string()
     .valid(...contactTypeList)
     .min(3)
