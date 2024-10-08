@@ -3,7 +3,7 @@ import {
   contactTypeList,
   phoneNumberRegexp,
 } from '../../constants/contacts.js';
-import { hadleSaveError, setUpdateOptions } from './hooks.js';
+import { handleSaveError, setUpdateOptions } from './hooks.js';
 
 const contactSchema = new Schema(
   {
@@ -39,12 +39,17 @@ const contactSchema = new Schema(
       minlength: 3,
       maxlength: 20,
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true },
 );
-contactSchema.post('save', hadleSaveError);
+contactSchema.post('save', handleSaveError);
 contactSchema.pre('findOneAndUpdate', setUpdateOptions);
-contactSchema.post('findOneAndUpdate', hadleSaveError);
+contactSchema.post('findOneAndUpdate', handleSaveError);
 
 const ContactCollection = model('contact', contactSchema);
 export const sortFields = [
