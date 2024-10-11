@@ -56,7 +56,6 @@ export const login = async (payload) => {
   if (!passwordCompare) {
     throw createHttpError(401, 'Email or password invalid');
   }
-  await SessionCollection.deleteOne({ userId: user._id });
 
   const sessionData = createSession();
 
@@ -86,7 +85,7 @@ export const refreshSession = async ({ refreshToken, sessionId }) => {
   const sessionData = createSession();
 
   const userSession = await SessionCollection.create({
-    userId: oldSession._id,
+    userId: oldSession.userId, // https://monosnap.com/file/ef2jhfc1O6ztESXZO9DFaE37srrMkQ тут має бути айді юзера, а не сесії. замінено з userId: oldSession._id, на userId: user._id,
     ...sessionData,
   });
   return userSession;
