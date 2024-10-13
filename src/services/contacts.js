@@ -1,8 +1,8 @@
 import ContactCollection from '../db/models/Contact.js';
-
 import calculatePaginationData from '../utils/calculatePaginationData.js';
-
 import { SORT_ORDER } from '../constants/index.js';
+
+// ----------------------------------
 
 export const getContacts = async ({
   perPage,
@@ -38,7 +38,6 @@ export const getContacts = async ({
     };
   }
 };
-
 export const getAllContacts = () => ContactCollection.find();
 export const getContact = (filter) => ContactCollection.findOne(filter);
 export const createContact = (payload) => ContactCollection.create(payload);

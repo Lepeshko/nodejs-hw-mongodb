@@ -33,9 +33,7 @@ const sessionSchema = new Schema(
 // ----------------
 
 sessionSchema.post('save', handleSaveError);
-
 sessionSchema.pre('findOneAndUpdate', setUpdateOptions);
-
 sessionSchema.post('findOneAndUpdate', handleSaveError);
 
 // ----------------

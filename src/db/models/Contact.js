@@ -17,14 +17,12 @@ const contactSchema = new Schema(
       type: String,
       match: phoneNumberRegexp,
       required: [true, 'The phone number field is required'],
-      minlength: 3,
-      maxlength: 20,
     },
     email: {
       type: String,
       required: false,
       minlength: 3,
-      maxlength: 50,
+      maxlength: 20,
     },
     isFavourite: {
       type: Boolean,
@@ -36,9 +34,8 @@ const contactSchema = new Schema(
       enum: contactTypeList,
       required: true,
       default: 'personal',
-      minlength: 3,
-      maxlength: 20,
     },
+    photo: { type: String },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',
@@ -50,7 +47,6 @@ const contactSchema = new Schema(
 contactSchema.post('save', handleSaveError);
 contactSchema.pre('findOneAndUpdate', setUpdateOptions);
 contactSchema.post('findOneAndUpdate', handleSaveError);
-
 const ContactCollection = model('contact', contactSchema);
 export const sortFields = [
   'name',

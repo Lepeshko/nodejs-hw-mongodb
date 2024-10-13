@@ -5,7 +5,13 @@ export default [
   pluginJs.configs.recommended,
   {
     files: ['src/**/*.js'],
-    languageOptions: { globals: globals.node },
+    languageOptions: {
+      globals: globals.node,
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: 'module',
+      },
+    },
     rules: {
       semi: 'error',
       'no-unused-vars': ['error', { args: 'none' }],
