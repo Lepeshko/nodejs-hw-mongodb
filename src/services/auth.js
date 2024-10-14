@@ -14,6 +14,7 @@ import { sendEmail } from '../utils/sendEmail.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import { validateCode } from '../utils/googleOAuth2.js';
 
 const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
@@ -57,6 +58,33 @@ export const login = async (payload) => {
   }
   await SessionCollection.deleteOne({ userId: user._id });
   const sessionData = createSession();
+  const userSession = await SessionCollection.create({
+    userId: user._id,
+    ...sessionData,
+  });
+  return userSession;
+};
+
+export const signinOrSignupWithGoogleOAuth = async (code) => {
+  const loginTicket = await validateCode(code);
+  const payload = loginTicket.getPayload();
+
+  let user = await UserCollection.findOne({ email: payload.email });
+  if (!user) {
+    const password = randomBytes(10);
+    const hashPassword = await bcrypt.hash(password, 10);
+    user = await UserCollection.create({
+      email: payload.email,
+      name: payload.name, // Можливо тут не username: а просто name:
+      password: hashPassword,
+      verify: true,
+    });
+
+    delete user._doc.password;
+  }
+
+  const sessionData = createSession();
+
   const userSession = await SessionCollection.create({
     userId: user._id,
     ...sessionData,

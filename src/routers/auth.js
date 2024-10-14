@@ -7,6 +7,7 @@ import {
   userLoginSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
+  userLoginWithGoogleOAuthSchema,
 } from '../validation/users.js';
 
 // -------------------------------------
@@ -16,6 +17,17 @@ authRouter.post(
   '/register',
   validateBody(userRegisterSchema),
   ctrlWrapper(authControllers.registerController),
+);
+
+authRouter.get(
+  '/google-oauth-url',
+  ctrlWrapper(authControllers.getGoogleOauthUrlController),
+);
+
+authRouter.post(
+  '/confirm-google',
+  validateBody(userLoginWithGoogleOAuthSchema),
+  ctrlWrapper(authControllers.loginWithGoogleOAuthController),
 );
 
 authRouter.post(
