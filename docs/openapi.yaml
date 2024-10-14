@@ -13,7 +13,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: https://hw6-email-and-images-ob50.onrender.com #Потрібно оновити посилання на рендер нового гітхабу по ДЗ-7
+  - url: https://nodejs-hw-mongodb-1-hw7-swagger.onrender.com #Потрібно оновити посилання на рендер нового гітхабу по ДЗ-7
 paths:
   /contacts/{id}:
     get:
